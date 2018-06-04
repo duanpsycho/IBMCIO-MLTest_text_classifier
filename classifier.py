@@ -38,8 +38,8 @@ vetor_modelo = CountVectorizer(analyzer='word', stop_words=stopWords)
 vetor_treino = vetor_modelo.fit_transform(df_treino['texto'])
 
 # Importa Naive Bayes
-from sklearn.naive_bayes import MultinomialNB
-modelo = MultinomialNB()
+import sklearn.naive_bayes as sk
+modelo = sk.MultinomialNB()
 modelo.fit(vetor_treino, df_treino['tipo'])
 
 # Prepara teste
@@ -56,4 +56,5 @@ predicao = modelo.predict(vetor_teste)
 # Avaliacao de resultado
 from sklearn import metrics
 avalicao = metrics.accuracy_score(predicao, df_teste['tipo'])
+print(predicao)
 print("Resultado da predição: {0}%".format(int(avalicao*100)))
