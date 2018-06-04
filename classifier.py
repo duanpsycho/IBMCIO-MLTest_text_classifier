@@ -29,11 +29,13 @@ df_treino = pd.DataFrame()
 df_treino['tipo'] = tipo_treino
 df_treino['texto'] = texto_treino
 
+#Carrega palavras neutras
+stopWords = list(open("stopWords.txt", 'r').read())
+
 # Vetorização de palavras
 from sklearn.feature_extraction.text import CountVectorizer
-vetor_modelo = CountVectorizer()
-vetor_modelo.fit(df_treino['texto'])
-vetor_treino = vetor_modelo.transform(df_treino['texto'])
+vetor_modelo = CountVectorizer(analyzer='word', stop_words=stopWords)
+vetor_treino = vetor_modelo.fit_transform(df_treino['texto'])
 
 # Importa Naive Bayes
 from sklearn.naive_bayes import MultinomialNB
