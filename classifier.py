@@ -1,4 +1,7 @@
 import os
+import pandas as pd
+import sklearn.naive_bayes as sk
+from sklearn import metrics
 
 entrada = "textos"
 tipo_teste, texto_teste = [], []
@@ -24,7 +27,6 @@ for pastas in os.listdir(entrada):
                 tipo_treino.append("receita_de_bolo")
 
 # Prepara Treino
-import pandas as pd
 df_treino = pd.DataFrame()
 df_treino['tipo'] = tipo_treino
 df_treino['texto'] = texto_treino
@@ -38,7 +40,6 @@ vetor_modelo = CountVectorizer(analyzer='word', stop_words=stopWords)
 vetor_treino = vetor_modelo.fit_transform(df_treino['texto'])
 
 # Importa Naive Bayes
-import sklearn.naive_bayes as sk
 modelo = sk.MultinomialNB()
 modelo.fit(vetor_treino, df_treino['tipo'])
 
@@ -54,7 +55,6 @@ vetor_teste = vetor_modelo.transform(df_teste['texto'])
 predicao = modelo.predict(vetor_teste)
 
 # Avaliacao de resultado
-from sklearn import metrics
 avalicao = metrics.accuracy_score(predicao, df_teste['tipo'])
 print(predicao)
 print("Resultado da predição: {0}%".format(int(avalicao*100)))
